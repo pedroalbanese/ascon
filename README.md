@@ -7,8 +7,11 @@
 
 Ascon is a new family of authenticated encryption algorithms, submitted to the CAESAR competition for authenticated ciphers. The Ascon family was designed to be lightweight and easy to implement, even with added countermeasures against side-channel attacks. 
 ### Command-line Ascon v1.1 Encryption Tool
-<pre>ascon [-d] -p "pass" [-i N] [-s "salt"] -f &lt;file.ext&gt;
+<pre>Usage of ascon:
+ascon [-d] -p "pass" [-i N] [-s "salt"] -f <file.ext>
   -d    Decrypt instead Encrypt.
+  -f string
+        Target file. ('-' for STDIN)
   -i int
         Iterations. (for PBKDF2) (default 1024)
   -k string
