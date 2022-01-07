@@ -15,12 +15,15 @@ import (
 	"github.com/pedroalbanese/lwcrypto/ascon2"
 )
 
-var dec = flag.Bool("d", false, "Decrypt instead Encrypt.")
-var iter = flag.Int("i", 1024, "Iterations. (for PBKDF2)")
-var key = flag.String("k", "", "128-bit key to Encrypt/Decrypt.")
-var pbkdf = flag.String("p", "", "PBKDF2.")
-var random = flag.Bool("r", false, "Generate random 128-bit cryptographic key.")
-var salt = flag.String("s", "", "Salt. (for PBKDF2)")
+var (
+	dec    = flag.Bool("d", false, "Decrypt instead Encrypt.")
+	file   = flag.String("f", "", "Target file. ('-' for STDIN)")
+	iter   = flag.Int("i", 1024, "Iterations. (for PBKDF2)")
+	key    = flag.String("k", "", "128-bit key to Encrypt/Decrypt.")
+	pbkdf  = flag.String("p", "", "PBKDF2.")
+	random = flag.Bool("r", false, "Generate random 128-bit cryptographic key.")
+	salt   = flag.String("s", "", "Salt. (for PBKDF2)")
+)
 
 func main() {
 	flag.Parse()
@@ -73,17 +76,22 @@ func main() {
 		}
 	}
 
+	buf := bytes.NewBuffer(nil)
+	var data io.Reader
+	if *file == "-" {
+		data = os.Stdin
+	} else {
+		data, _ = os.Open(*file)
+	}
+	io.Copy(buf, data)
+	msg := buf.Bytes()
+
 	aead, err := ascon.New128(key)
 	if err != nil {
 		panic(err)
 	}
 
 	if *dec == false {
-		buf := bytes.NewBuffer(nil)
-		data := os.Stdin
-		io.Copy(buf, data)
-		msg := buf.Bytes()
-
 		nonce := make([]byte, aead.NonceSize(), aead.NonceSize()+len(msg)+aead.Overhead())
 
 		out := aead.Seal(nonce, nonce, msg, nil)
@@ -93,11 +101,6 @@ func main() {
 	}
 
 	if *dec == true {
-		buf := bytes.NewBuffer(nil)
-		data := os.Stdin
-		io.Copy(buf, data)
-		msg := buf.Bytes()
-
 		nonce, msg := msg[:aead.NonceSize()], msg[aead.NonceSize():]
 
 		out, err := aead.Open(nil, nonce, msg, nil)
