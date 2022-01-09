@@ -29,7 +29,7 @@ func main() {
 	flag.Parse()
 
 	if len(os.Args) < 2 {
-		fmt.Fprintln(os.Stderr, "Ascon v1.1 Encryption Tool - ALBANESE Research Lab (c) 2020-2022")
+		fmt.Fprintln(os.Stderr, "Ascon v1.2 Encryption Tool - ALBANESE Research Lab (c) 2020-2022")
 		fmt.Fprintln(os.Stderr, "Lightweight AEAD stream cipher submitted to the CAESAR competition\n")
 		fmt.Fprintln(os.Stderr, "Usage of "+os.Args[0]+":")
 		fmt.Fprintln(os.Stderr, os.Args[0]+" [-d] -p \"pass\" [-i N] [-s \"salt\"] -f <file.ext>")
