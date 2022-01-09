@@ -6,7 +6,7 @@
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/pedroalbanese/ascon)](https://github.com/pedroalbanese/ascon/releases)  
 
 Ascon is a new family of authenticated encryption algorithms, submitted to the CAESAR competition for authenticated ciphers. The Ascon family was designed to be lightweight and easy to implement, even with added countermeasures against side-channel attacks. 
-### Command-line Ascon v1.1 Encryption Tool
+### Command-line Ascon v1.2 Encryption Tool
 <pre>Usage of ascon:
 ascon [-d] -p "pass" [-i N] [-s "salt"] -f &lt;file.ext&gt;
   -d    Decrypt instead Encrypt.
