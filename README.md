@@ -10,7 +10,7 @@ Ascon is a new family of authenticated encryption algorithms, submitted to the C
 ### Command-line Ascon v1.2 Encryption Tool
 <pre>Usage of ascon:
 ascon [-d] -p "pass" [-i N] [-s "salt"] -f &lt;file.ext&gt;
-  -d    Decrypt instead Encrypt.
+  -d    Decrypt instead of Encrypt.
   -f string
         Target file. ('-' for STDIN)
   -i int
