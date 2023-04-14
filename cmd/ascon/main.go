@@ -16,6 +16,7 @@ import (
 )
 
 var (
+	aad    = flag.String("a", "", "Additional Associated data.")
 	dec    = flag.Bool("d", false, "Decrypt instead of Encrypt.")
 	file   = flag.String("f", "", "Target file. ('-' for STDIN)")
 	iter   = flag.Int("i", 1024, "Iterations. (for PBKDF2)")
@@ -98,7 +99,7 @@ func main() {
 			log.Fatal(err)
 		}
 
-		out := aead.Seal(nonce, nonce, msg, nil)
+		out := aead.Seal(nonce, nonce, msg, []byte(*aad))
 		fmt.Printf("%s", out)
 
 		os.Exit(0)
@@ -107,7 +108,7 @@ func main() {
 	if *dec == true {
 		nonce, msg := msg[:aead.NonceSize()], msg[aead.NonceSize():]
 
-		out, err := aead.Open(nil, nonce, msg, nil)
+		out, err := aead.Open(nil, nonce, msg, []byte(*aad))
 		if err != nil {
 			log.Fatal(err)
 		}
